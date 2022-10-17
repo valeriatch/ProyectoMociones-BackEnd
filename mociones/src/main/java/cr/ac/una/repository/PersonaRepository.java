@@ -1,4 +1,10 @@
 package cr.ac.una.repository;
 
-public class PersonaRepository {
+
+import cr.ac.una.entity.Persona;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PersonaRepository extends JpaRepository<Persona, Long> {
+
+
 }
