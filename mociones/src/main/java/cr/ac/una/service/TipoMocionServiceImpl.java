@@ -11,14 +11,14 @@ import java.util.Collection;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class TipoMocionImpl implements TipoMocionService{
+public class TipoMocionServiceImpl implements TipoMocionService{
 
     private final TipoMocionRepository tipoMocionRepository;
 
     @Override
     public Collection<TipoMocion> listar() {
         log.info("recuperando tipos de mociones de la base de datos");
-        return tipoMocionRepository.findAll();
+        return (Collection<TipoMocion>) tipoMocionRepository.findAll();
     }
 
     @Override

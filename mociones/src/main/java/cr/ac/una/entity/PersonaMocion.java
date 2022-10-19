@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class PersonaMocion implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne

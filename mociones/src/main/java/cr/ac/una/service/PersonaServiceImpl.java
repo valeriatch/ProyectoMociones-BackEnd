@@ -21,7 +21,7 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public Collection<Persona> listar() {
         log.info("recuperando personas de la base de datos");
-        return personaRepository.findAll();
+        return (Collection<Persona>) personaRepository.findAll();
     }
 
     @Override

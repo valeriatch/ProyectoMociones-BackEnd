@@ -11,4 +11,8 @@ public interface MocionService {
     public Mocion guardar(Mocion mocion);
     public Mocion eliminar(Long id);
 
+    public Mocion agregarTipoMocion(Long idMocion, Long idTipoMocion);
+
+    Mocion actualizarTipo(Long idMocion, Long idTipo);
+
 }

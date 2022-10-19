@@ -10,7 +10,9 @@ public interface PersonaMocionService {
 
     public PersonaMocion guardar(Long idPersona, Long idMocion);
     public PersonaMocion eliminar(Long idPersonaMocion);
-    public Collection<PersonaMocion> listarMocionesPorPersona(Long idPersona);
-    public Collection<PersonaMocion> listarPersonasPorMocion(Long idMocion);
+
+    public Collection<PersonaMocion> listar();
+    public Collection<PersonaMocion> listarPorPersona(Long idPersona);
+    public Collection<PersonaMocion> listarPorMocion(Long idMocion);
 }
 

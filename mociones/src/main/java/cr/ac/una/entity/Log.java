@@ -5,25 +5,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.sql.Date;
 
-@Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Mocion implements Serializable {
+@NoArgsConstructor
+@Entity
+public class Log implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String texto;
+    private String metodo;
 
-    @OneToOne
-    @JoinColumn(name = "tipo_mocion_id", referencedColumnName = "id")
-    private TipoMocion tipoMocion;
+    private String descripcion;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fecha;

@@ -1,21 +1,27 @@
 package cr.ac.una.resource;
 
-import cr.ac.una.entity.Mocion;
-import cr.ac.una.entity.Persona;
-import cr.ac.una.entity.PersonaMocion;
-import cr.ac.una.entity.TipoMocion;
+import cr.ac.una.entity.*;
+import cr.ac.una.repository.LogRepository;
 import cr.ac.una.service.MocionService;
 import cr.ac.una.service.PersonaMocionService;
 import cr.ac.una.service.PersonaService;
 import cr.ac.una.service.TipoMocionService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/v1")
 public class MocionesResource {
 
@@ -23,6 +29,16 @@ public class MocionesResource {
     private final PersonaService personaService;
     private final PersonaMocionService personaMocionService;
     private final TipoMocionService tipoMocionService;
+
+    private final LogRepository LR;
+
+
+
+    Date date = new Date();
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+    private String strDate= formatter.format(date);
+
+
 
     //                                  PERSONA
 
@@ -48,24 +64,46 @@ public class MocionesResource {
 
     //                                     PERSONA MOCION
 
-    @GetMapping("/persona_mocion/persona/{id}")
+   @GetMapping("/persona_mocion/persona/{id}")
     public ResponseEntity<Collection<PersonaMocion>> listarMocionesPorPersona(@PathVariable Long id) {
-        return ResponseEntity.ok().body(personaMocionService.listarMocionesPorPersona(id));
+        return ResponseEntity.ok().body(personaMocionService.listarPorPersona(id));
     }
 
     @GetMapping("/persona_mocion/mocion/{id}")
     public ResponseEntity<Collection<PersonaMocion>> listarPersonasPorMocion(@PathVariable Long id) {
-        return ResponseEntity.ok().body(personaMocionService.listarPersonasPorMocion(id));
+        return ResponseEntity.ok().body(personaMocionService.listarPorMocion(id));
     }
 
     @PostMapping("/persona_mocion")
     public ResponseEntity<PersonaMocion> guardarPersonaMocion(@RequestBody PersonaMocion personaMocion) {
-        return ResponseEntity.ok(personaMocionService.guardar(personaMocion.getPersona().getId(), personaMocion.getMocion().getId()));
+        Collection<PersonaMocion> personas = personaMocionService.listarPorPersona(personaMocion.getPersona().getId());
+        Collection<PersonaMocion> mociones = personaMocionService.listarPorMocion(personaMocion.getMocion().getId());
+        //NO FUNCIONA
+        AtomicInteger perCant = new AtomicInteger(0);
+        personas.forEach(personaMocion1 -> {
+            log.info(personaMocion1.getMocion().getFecha()+"");
+            log.info(strDate);
+            if (personaMocion1.getMocion().getFecha().equals(strDate) ) {
+                perCant.getAndIncrement();
+
+            }
+        });
+        log.info(perCant.get()+"");
+        //NO FUNCIONA
+        if(mociones.size() < 3 && perCant.get() < 5) {
+            return ResponseEntity.ok(personaMocionService.guardar(personaMocion.getPersona().getId(), personaMocion.getMocion().getId()));
+        }
+        return ResponseEntity.ok().body(null);
     }
 
     @DeleteMapping("/persona_mocion/{id}")
     public ResponseEntity<PersonaMocion> eliminarPersonaMocion(@PathVariable Long id) {
         return ResponseEntity.ok(personaMocionService.eliminar(id));
+    }
+
+    @GetMapping("/persona_mocion")
+    public ResponseEntity<Collection<PersonaMocion>> listarPersonasMociones(){
+        return ResponseEntity.ok().body(personaMocionService.listar());
     }
 
     //                                      MOCION
@@ -77,6 +115,7 @@ public class MocionesResource {
 
     @PostMapping("/mocion")
     public ResponseEntity<Mocion> guardarMocion(@RequestBody Mocion mocion) {
+        mocion.setFecha(new java.sql.Date(System.currentTimeMillis()));
         return ResponseEntity.ok(mocionService.guardar(mocion));
     }
 
@@ -88,6 +127,11 @@ public class MocionesResource {
     @GetMapping("/mocion/{id}")
     public ResponseEntity<Mocion> buscarMocionPorId(@PathVariable Long id) {
         return ResponseEntity.ok(mocionService.BuscarPorId(id));
+    }
+
+    @PutMapping("/mociontipo/{idMocion}/{idTipo}")
+    public ResponseEntity<Mocion> actualizarMocionTipo(@PathVariable Long idMocion, @PathVariable Long idTipo) {
+        return ResponseEntity.ok(mocionService.actualizarTipo(idMocion, idTipo));
     }
 
     //                                      TIPO MOCION
@@ -110,5 +154,12 @@ public class MocionesResource {
     @GetMapping("/tipo_mocion/{id}")
     public ResponseEntity<TipoMocion> buscarTipoMocionPorId(@PathVariable Long id) {
         return ResponseEntity.ok(tipoMocionService.BuscarPorId(id));
+    }
+
+    @GetMapping("/Log")
+    public ResponseEntity<Collection<Log>> listarLogs(){
+        Collection<Log> logs = new ArrayList<>();
+        LR.findAll().forEach(logs::add);
+        return ResponseEntity.ok().body(logs);
     }
 }

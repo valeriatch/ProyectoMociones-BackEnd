@@ -4,10 +4,12 @@ import cr.ac.una.entity.Mocion;
 import cr.ac.una.entity.Persona;
 import cr.ac.una.entity.PersonaMocion;
 import cr.ac.una.repository.PersonaMocionRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Slf4j
@@ -27,7 +29,6 @@ public class PersonaMocionServiceImpl implements PersonaMocionService{
         Persona persona = personaService.BuscarPorId(idPersona);
         Mocion mocion = mocionService.BuscarPorId(idMocion);
         return personaMocionRepository.save(new PersonaMocion(null,persona, mocion));
-
     }
 
     @Override
@@ -42,14 +43,33 @@ public class PersonaMocionServiceImpl implements PersonaMocionService{
     }
 
     @Override
-    public Collection<PersonaMocion> listarMocionesPorPersona(Long idPersona) {
-        log.info("recuperando mociones de la base de datos por medio de persona, idPersona: {}", idPersona);
-        return personaMocionRepository.FindAllByPersonaId(idPersona);
+    public Collection<PersonaMocion> listar() {
+        log.info("recuperando personaMociones de la base de datos");
+        return (Collection<PersonaMocion>) personaMocionRepository.findAll();
     }
 
     @Override
-    public Collection<PersonaMocion> listarPersonasPorMocion(Long idMocion) {
+    public Collection<PersonaMocion> listarPorPersona(Long idPersona) {
+        log.info("recuperando mociones de la base de datos por medio de persona, idPersona: {}", idPersona);
+        Collection<PersonaMocion> personas = new ArrayList<>();
+        personaMocionRepository.findAll().forEach(personaMocion -> {
+            if(personaMocion.getPersona().getId().equals(idPersona)){
+                personas.add(personaMocion);
+            }
+        });
+        return personas;
+    }
+
+    @Override
+    public Collection<PersonaMocion> listarPorMocion(Long idMocion) {
         log.info("recuperando personas de la base de datos por medio de mocion, idMocion: {}", idMocion);
-        return personaMocionRepository.FindAllByMocionId(idMocion);
+        Collection<PersonaMocion> mociones = new ArrayList<>();
+        personaMocionRepository.findAll().forEach(personaMocion -> {
+            if(personaMocion.getMocion().getId().equals(idMocion)){
+                mociones.add(personaMocion);
+            }
+        });
+        return mociones;
     }
 }
+

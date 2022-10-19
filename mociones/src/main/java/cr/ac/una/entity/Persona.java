@@ -21,6 +21,4 @@ public class Persona implements Serializable {
 
     private String nombre;
 
-
-
 }
