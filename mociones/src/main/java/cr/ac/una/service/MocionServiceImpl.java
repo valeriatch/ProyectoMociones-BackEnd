@@ -30,9 +30,25 @@ public class MocionServiceImpl implements MocionService {
     }
 
     @Override
-    public Mocion guardar(Mocion mocion) {
+    public Mocion guardar(Mocion mocion, Long id) {
         log.info("guardando mocion en la base de datos, mocion: {}", mocion);
+        TipoMocion tipoMocion = tipoMocionService.BuscarPorId(id);
+        mocion.setTipoMocion(tipoMocion);
         return mocionRepository.save(mocion);
+    }
+
+    @Override
+    public Mocion actualizarMocion(Mocion mocion, Long id) {
+        log.info("actualizando la mocion en la base de datos, id: {},", id);
+        //Mocion mocion1 = mocionRepository.findById(id).orElse(null);
+        TipoMocion tipoMocion = tipoMocionService.BuscarPorId(id);
+        if (mocion != null) {
+            mocion.setTipoMocion(tipoMocion);
+            mocionRepository.save(mocion);
+            return mocion;
+        }
+        log.info("tipo de mocion actualizado de la mocion, mocion: {}", mocion);
+        return null;
     }
 
     @Override

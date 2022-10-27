@@ -31,9 +31,10 @@ public class MocionesApplication {
             TMS.guardar(new TipoMocion(null,"Mocion de orden del dia"));
             TMS.guardar(new TipoMocion(null,"Mocion de cierre de sesion"));
             TMS.guardar(new TipoMocion(null,"Mocion de apertura de sesion"));
-            MS.guardar(new Mocion(null, "Descripcion 1", null, new Date(System.currentTimeMillis())));
-            MS.guardar(new Mocion(null, "Descripcion 2", null, new Date(System.currentTimeMillis())));
-            MS.guardar(new Mocion(null, "Descripcion 3", null, new Date(System.currentTimeMillis())));
+            MS.guardar(new Mocion(null, "Descripcion 1", null, new Date(System.currentTimeMillis())), Long.parseLong("1"));
+            MS.guardar(new Mocion(null, "Descripcion 2", null, new Date(System.currentTimeMillis())), Long.parseLong("2"));
+            MS.guardar(new Mocion(null, "Descripcion 3", null, new Date(System.currentTimeMillis())), Long.parseLong("3"));
+            MS.guardar(new Mocion(null, "Descripcion 4", null, new Date(System.currentTimeMillis())), Long.parseLong("3"));
             PS.guardar(new Persona(null, "123456", "juan" ));
             PS.guardar(new Persona(null, "123457", "pedro" ));
             PS.guardar(new Persona(null, "123458", "maria" ));

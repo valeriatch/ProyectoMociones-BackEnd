@@ -10,6 +10,7 @@ public interface TipoMocionService {
     public TipoMocion BuscarPorId(Long id);
     public TipoMocion guardar(TipoMocion tipoMocion);
     public TipoMocion eliminar(Long id);
+    public TipoMocion actualizar(Long id, TipoMocion tipoMocion);
 
 
 }

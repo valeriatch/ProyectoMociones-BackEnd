@@ -43,4 +43,15 @@ public class TipoMocionServiceImpl implements TipoMocionService{
         log.info("tipo de mocion eliminada de la base de datos, tipoMocion: {}", tipoMocion);
         return tipoMocion;
     }
+    @Override
+    public TipoMocion actualizar(Long id, TipoMocion tipoMocion) {
+        log.info("actualizando tipo de mocion de la base de datos, id: {}", id);
+        TipoMocion tipoMocion1 = tipoMocionRepository.findById(id).orElse(null);
+        if (tipoMocion1 != null) {
+            tipoMocionRepository.save(tipoMocion);
+        }
+        log.info("tipo de mocion actualizada de la base de datos, tipoMocion: {}", tipoMocion);
+        return tipoMocion;
+    }
+
 }
