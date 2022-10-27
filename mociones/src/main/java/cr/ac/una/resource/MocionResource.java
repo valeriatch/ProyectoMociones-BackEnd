@@ -68,6 +68,8 @@ public class MocionResource {
 		if (mocionActual == null && tipomocionActual == null) {
 			return ResponseEntity.badRequest().build();// ERROR 400
 		}
+		mocionActual.setTexto(mocion.getTexto());
+		mocionActual.setFecha(mocion.getFecha());
 		return ResponseEntity.ok(mocionService.guardar(mocionActual,id));
 	}
 
