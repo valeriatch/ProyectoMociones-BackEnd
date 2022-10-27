@@ -28,11 +28,11 @@ public class MocionResource {
 		return ResponseEntity.ok().body(mocionService.listar());
 	}
 
-	@PostMapping
+	/*@PostMapping
 	public ResponseEntity<Mocion> guardarMocion(@RequestBody Mocion mocion) {
 		mocion.setFecha(new java.sql.Date(System.currentTimeMillis()));
 		return ResponseEntity.ok(mocionService.guardar(mocion));
-	}
+	}*/
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Mocion> eliminarMocion(@PathVariable Long id) {
@@ -68,13 +68,8 @@ public class MocionResource {
 		if (mocionActual == null && tipomocionActual == null) {
 			return ResponseEntity.badRequest().build();// ERROR 400
 		}
-		mocionActual.setTexto(mocion.getTexto());
-		mocionActual.setFecha(mocion.getFecha());
-		mocionActual.setTipoMocion(tipomocionActual);
-		return ResponseEntity.ok(mocionService.guardar(mocionActual));
+		return ResponseEntity.ok(mocionService.guardar(mocionActual,id));
 	}
-
-
 
 	@GetMapping("/Log")
 	public ResponseEntity<Collection<Log>> listarLogs() {
