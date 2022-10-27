@@ -35,9 +35,10 @@ public class PersonaMocionServiceImpl implements PersonaMocionService{
     public PersonaMocion eliminar(Long idPersonaMocion) {
         log.info("eliminando personaMocion de la base de datos, idPersonaMocion: {}", idPersonaMocion);
         PersonaMocion personaMocion = personaMocionRepository.findById(idPersonaMocion).orElse(null);
-        if (personaMocion != null) {
-            personaMocionRepository.delete(personaMocion);
+        if (personaMocion == null) {
+            return null;
         }
+        personaMocionRepository.delete(personaMocion);
         log.info("personaMocion eliminada de la base de datos, personaMocion: {}", personaMocion);
         return personaMocion;
     }

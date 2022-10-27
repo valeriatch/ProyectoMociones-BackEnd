@@ -23,10 +23,13 @@ public class TipoMocionServiceImpl implements TipoMocionService{
 
     @Override
     public TipoMocion BuscarPorId(Long id) {
-		if(!tipoMocionRepository.findById(id).isPresent()){
+        log.info("recuperando tipo de mocion de la base de datos, id: {}", id);
+        TipoMocion tipo= tipoMocionRepository.findById(id).orElse(null);
+
+		if(tipo == null){
 			return null;
 		}
-        return tipoMocionRepository.findById(id).get();
+        return tipo;
     }
 
     @Override
@@ -39,9 +42,10 @@ public class TipoMocionServiceImpl implements TipoMocionService{
     public TipoMocion eliminar(Long id) {
         log.info("eliminando tipo de mocion de la base de datos, id: {}", id);
         TipoMocion tipoMocion = tipoMocionRepository.findById(id).orElse(null);
-        if (tipoMocion != null) {
-            tipoMocionRepository.delete(tipoMocion);
+        if (tipoMocion == null) {
+            return null;
         }
+        tipoMocionRepository.delete(tipoMocion);
         log.info("tipo de mocion eliminada de la base de datos, tipoMocion: {}", tipoMocion);
         return tipoMocion;
     }

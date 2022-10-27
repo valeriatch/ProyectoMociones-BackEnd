@@ -44,9 +44,10 @@ public class MocionServiceImpl implements MocionService {
 	public Mocion eliminar(Long id) {
 		log.info("eliminando mocion de la base de datos, id: {}", id);
 		Mocion mocion = mocionRepository.findById(id).orElse(null);
-		if (mocion != null) {
-			mocionRepository.delete(mocion);
+		if (mocion == null) {
+			return null;
 		}
+		mocionRepository.delete(mocion);
 		log.info("mocion eliminada de la base de datos, mocion: {}", mocion);
 		return mocion;
 	}

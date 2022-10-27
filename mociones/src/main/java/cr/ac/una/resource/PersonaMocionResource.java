@@ -38,6 +38,7 @@ public class PersonaMocionResource {
 
     @GetMapping("/persona/{id}")
     public ResponseEntity<Collection<PersonaMocion>> listarMocionesPorPersona(@PathVariable Long id) {
+
         return ResponseEntity.ok().body(personaMocionService.listarPorPersona(id));
     }
 
@@ -77,7 +78,11 @@ public class PersonaMocionResource {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<PersonaMocion> eliminarPersonaMocion(@PathVariable Long id) {
-        return ResponseEntity.ok(personaMocionService.eliminar(id));
+        PersonaMocion personaMocion =personaMocionService.eliminar(id);
+        if (personaMocion == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(personaMocion);
     }
 
     @GetMapping

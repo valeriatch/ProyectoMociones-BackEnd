@@ -27,7 +27,11 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public Persona BuscarPorId(Long id) {
         log.info("recuperando persona de la base de datos, id: {}", id);
-        return personaRepository.findById(id).orElse(new Persona());
+        Persona persona= personaRepository.findById(id).orElse(null);
+        if(persona == null){
+            return null;
+        }
+        return persona;
     }
 
     @Override
@@ -40,9 +44,10 @@ public class PersonaServiceImpl implements PersonaService {
     public Persona eliminar(Long id) {
         log.info("eliminando persona de la base de datos, id: {}", id);
         Persona persona = personaRepository.findById(id).orElse(null);
-        if (persona != null) {
-            personaRepository.delete(persona);
+        if (persona == null) {
+            return null;
         }
+        personaRepository.delete(persona);
         log.info("persona eliminada de la base de datos, persona: {}", persona);
         return persona;
     }

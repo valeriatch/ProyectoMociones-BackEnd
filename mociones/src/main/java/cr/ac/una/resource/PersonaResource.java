@@ -29,11 +29,19 @@ public class PersonaResource {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Persona> eliminarPersona(@PathVariable Long id) {
-        return ResponseEntity.ok(personaService.eliminar(id));
+        Persona persona = personaService.eliminar(id);
+        if (persona == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(persona);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Persona> buscarPersonaPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(personaService.BuscarPorId(id));
+        Persona persona = personaService.BuscarPorId(id);
+        if (persona == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(persona);
     }
 }
