@@ -13,6 +13,6 @@ public interface MocionService {
 
     public Mocion agregarTipoMocion(Long idMocion, Long idTipoMocion);
 
-    Mocion actualizarTipo(Long idMocion, Long idTipo);
+
 
 }

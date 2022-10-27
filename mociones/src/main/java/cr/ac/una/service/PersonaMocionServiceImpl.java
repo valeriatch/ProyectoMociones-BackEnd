@@ -72,4 +72,3 @@ public class PersonaMocionServiceImpl implements PersonaMocionService{
         return mociones;
     }
 }
-

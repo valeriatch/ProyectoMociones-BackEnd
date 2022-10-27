@@ -23,8 +23,10 @@ public class TipoMocionServiceImpl implements TipoMocionService{
 
     @Override
     public TipoMocion BuscarPorId(Long id) {
-        log.info("recuperando tipo de mocion de la base de datos, id: {}", id);
-        return tipoMocionRepository.findById(id).orElse(new TipoMocion());
+		if(!tipoMocionRepository.findById(id).isPresent()){
+			return null;
+		}
+        return tipoMocionRepository.findById(id).get();
     }
 
     @Override
