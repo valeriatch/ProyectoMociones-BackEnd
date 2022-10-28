@@ -72,4 +72,12 @@ public class PersonaMocionServiceImpl implements PersonaMocionService{
         });
         return mociones;
     }
+
+    @Override
+    public PersonaMocion listarPersonaMocion(Long id) {
+        log.info("recuperando personas de la base de datos por medio de mocion, idMocion: {}", id);
+        PersonaMocion mociones = personaMocionRepository.findById(id).orElse(null);
+        return mociones;
+    }
+
 }

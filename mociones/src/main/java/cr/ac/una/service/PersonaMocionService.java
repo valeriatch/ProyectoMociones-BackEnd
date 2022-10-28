@@ -13,6 +13,7 @@ public interface PersonaMocionService {
 
     public Collection<PersonaMocion> listar();
     public Collection<PersonaMocion> listarPorPersona(Long idPersona);
+    public PersonaMocion listarPersonaMocion(Long id);
     public Collection<PersonaMocion> listarPorMocion(Long idMocion);
 }
 

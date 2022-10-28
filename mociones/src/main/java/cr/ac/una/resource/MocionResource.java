@@ -63,6 +63,9 @@ public class MocionResource {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Mocion> actualizarMocion(@PathVariable("id") Long id, @RequestBody Mocion mocion) {
+		if(mocion.getId() == null){
+			mocion = mocionService.guardarMoc(mocion);
+		}
 		TipoMocion tipomocionActual = tipoMocionService.BuscarPorId(id);
 		Mocion mocionActual = mocionService.BuscarPorId(mocion.getId());
 		if (mocionActual == null && tipomocionActual == null) {

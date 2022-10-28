@@ -10,6 +10,7 @@ public interface MocionService {
     public Mocion BuscarPorId(Long id);
     public Mocion actualizarMocion(Mocion mocion, Long id);
     public Mocion guardar(Mocion mocion, Long id);
+    public Mocion guardarMoc(Mocion mocion);
     public Mocion eliminar(Long id);
 
     public Mocion agregarTipoMocion(Long idMocion, Long idTipoMocion);

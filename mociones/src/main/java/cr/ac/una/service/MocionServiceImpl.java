@@ -44,6 +44,12 @@ public class MocionServiceImpl implements MocionService {
         return mocionRepository.save(mocion);
     }
 
+	@Override
+    public Mocion guardarMoc(Mocion mocion) {
+        log.info("guardando mocion en la base de datos, mocion: {}", mocion);
+        return mocionRepository.save(mocion);
+    }
+
     @Override
     public Mocion actualizarMocion(Mocion mocion, Long id) {
         log.info("actualizando la mocion en la base de datos, id: {},", id);

@@ -46,6 +46,10 @@ public class PersonaMocionResource {
     public ResponseEntity<Collection<PersonaMocion>> listarPersonasPorMocion(@PathVariable Long id) {
         return ResponseEntity.ok().body(personaMocionService.listarPorMocion(id));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonaMocion> listarPersonasMocion(@PathVariable Long id) {
+        return ResponseEntity.ok().body(personaMocionService.listarPersonaMocion(id));
+    }
 
     @PostMapping("/{idpersona}/{idmocion}")
     public ResponseEntity<PersonaMocion> guardarPersonaMocion(@PathVariable("idpersona") Long idpersona,
